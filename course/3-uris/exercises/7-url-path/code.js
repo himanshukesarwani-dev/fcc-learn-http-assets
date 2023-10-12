@@ -1,30 +1,36 @@
-const url = 'https://api.boot.dev/v1/courses_rest_api/learn-http/users'
+const url = "https://api.boot.dev/v1/courses_rest_api/learn-http/locations";
 
 // don't touch below this line
-const apiKey = generateKey()
-const response = await fetch(url, {
-  method: 'GET',
-  mode: 'cors',
-  headers: {
-    'X-API-Key': apiKey,
-    'Content-Type': 'application/json'
-  }
-})
+const apiKey = generateKey();
 
-const responseData = await response.json()
+async function fetchData() {
+  const response = await fetch(url, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "X-API-Key": apiKey,
+      "Content-Type": "application/json",
+    },
+  });
 
-logLocations(responseData)
+  const responseData = await response.json();
+  logLocations(responseData);
+}
+
+fetchData();
 
 function generateKey() {
-  const characters = 'ABCDEF0123456789'
-  let result = ''
-  for (let i = 0; i < 16; i++){
-    result += characters.charAt(Math.floor(Math.random() * characters.length))
+  const characters = "ABCDEF0123456789";
+  let result = "";
+  for (let i = 0; i < 16; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
-  return result
+  return result;
 }
 function logLocations(locations) {
   for (const location of locations) {
-    console.log(`Location: ${location.name}, Recommended Character Level: ${location.recommendedLevel}`)
-  } 
+    console.log(
+      `Location: ${location.name}, Recommended Character Level: ${location.recommendedLevel}`
+    );
+  }
 }
