@@ -1,33 +1,42 @@
-const apiKey = generateKey()
-const items = await getItemData()
+async function mainFunc() {
+  const items = await getItemData();
+  logItems(items);
+}
 
-logItems()
+const apiKey = generateKey();
+
+mainFunc().catch((error) => {
+  console.error("An error occurred:", error);
+});
 
 // don't touch below this line
 
 async function getItemData() {
-  const response = await fetch('https://api.boot.dev/v1/courses_rest_api/learn-http/items', {
-    method: 'GET',
-    mode: 'cors',
-    headers: {
-      'X-API-Key': apiKey,
-      'Content-Type': 'application/json'
+  const response = await fetch(
+    "https://api.boot.dev/v1/courses_rest_api/learn-http/items",
+    {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "X-API-Key": apiKey,
+        "Content-Type": "application/json",
+      },
     }
-  })
-  return response.json()
+  );
+  return response.json();
 }
 
 function generateKey() {
-  const characters = 'ABCDEF0123456789'
-  let result = ''
-  for (let i = 0; i < 16; i++){
-    result += characters.charAt(Math.floor(Math.random() * characters.length))
+  const characters = "ABCDEF0123456789";
+  let result = "";
+  for (let i = 0; i < 16; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
-  return result
+  return result;
 }
 
 function logItems(items) {
   for (const item of items) {
-    console.log(item.name)
-  } 
+    console.log(item.name);
+  }
 }
